@@ -1,0 +1,11 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: hugo front matter
+# key: hugofrt
+# binding: direct-keybinding
+# --
+---
+title: "$1"
+description: "$2"
+tags: [ $3 ]
+date: ${4:`(format-time-string "%Y-%m-%d")`}$0
+---

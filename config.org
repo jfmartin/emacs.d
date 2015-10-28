@@ -1,0 +1,518 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Jean-Francois Martin
+
+* Personal Information
+
+#+begin_src emacs-lisp
+(setq user-full-name "Jean-François Martin"
+      user-mail-address "jf.je.martin@gmail.com")
+#+end_src
+
+* Customize settings
+
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (load custom-file)
+#+END_SRC
+
+* Sane/Better defaults
+
+Basics config is done, now some sane defaults.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Answering just 'y' or 'n'
+  (defalias 'yes-or-no-p 'y-or-n-p)
+
+  ;; UTF-8
+  (setq locale-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+
+  ;; Thing that should be activate
+  (put 'downcase-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+  (put 'narrow-to-region 'disabled nil)
+  (put 'dired-find-alternate-file 'disabled nil)
+
+  ;; Backups & auto-save
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+
+  ;; Turn off the blinking cursor
+  ;; (blink-cursor-mode -1)
+
+  ;; Don't beep
+  (setq visible-bell t)
+
+  ;; Hippie > Dabbrev
+  (global-set-key [remap dabbrev-expand] 'hippie-expand) ; M-/
+
+  ;; Linenumber
+  (global-linum-mode 1)
+
+  ;; Pairs
+  (show-paren-mode 1)
+
+  ;; Windows & Frames
+  (global-set-key (kbd "M-o") 'other-window)
+
+  ;; warn when opening files bigger than 100MB
+  (setq large-file-warning-threshold 100000000)
+
+  ;; highlight line
+  (global-hl-line-mode)
+
+  ;; column in mode line
+  (column-number-mode 1)
+
+  ;; Don't ask when create buffer or file
+  (setq confirm-nonexistent-file-or-buffer nil)
+#+END_SRC
+
+** Things that are intrag
+
+#+BEGIN_SRC emacs-lisp
+  ;; Buffer
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  ;; Search
+  (global-set-key (kbd "C-s") 'isearch-forward-regexp) ; was isearch-forward
+  (global-set-key (kbd "C-r") 'isearch-backward-regexp) ; was isearch-backward
+#+END_SRC
+
+*** Uniquify
+
+Distinguish buffer with the same name by setting up uniquify.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward)
+#+END_SRC
+
+* Theme & Visual
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ample-zen-theme
+    :ensure t
+    :config (load-theme 'ample-zen t))
+#+END_SRC
+
+* Ido & Recentf
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ido
+    :init
+    (progn
+      (ido-mode 1)
+      (ido-everywhere 1)
+      (use-package ido-vertical-mode
+	:ensure t
+	:init (ido-vertical-mode 1)
+	(setq ido-vertical-define-keys 'C-n-and-C-p-only))
+      (use-package flx-ido
+	:ensure t
+	:init
+	(flx-ido-mode 1)
+	(setq ido-enable-flex-matching t))))
+
+  (use-package recentf
+    :init
+    (progn
+      (recentf-mode t)
+      (setq recentf-max-saved-items 200
+	    recentf-save-file "~/.emacs.d/recentf")))
+#+END_SRC
+
+*** Smex
+
+I used to bind M-x to Smex, but i am trying helm. Keep the config but
+comment it.
+
+#+BEGIN_SRC emacs-lisp
+  ;; (require 'smex)
+  ;; (setq smex-save-file "~/.emacs.d/smex.save")
+  ;; (smex-initialize)
+  ;; (global-set-key (kbd "M-x") 'smex)
+  ;; (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+  ;; (global-set-key (kbd "C-c M-x") 'smex-update)
+  ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+#+END_SRC
+
+* Tramp
+
+#+BEGIN_SRC emacs-lisp
+  (use-package tramp
+    :init (setq tramp-default-method "ssh"))
+
+#+END_SRC
+
+* Edit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :ensure t
+    :diminish undo-tree-mode
+    :config
+    (global-undo-tree-mode))
+
+  (use-package abbrev
+    :diminish abbrev-mode)
+
+  (use-package hydra
+    :ensure t)
+
+  (use-package key-chord
+    :ensure t)
+#+END_SRC
+
+** Spell check
+
+#+BEGIN_SRC emacs-lisp
+  (if (executable-find "aspell")
+      (progn
+	(setq ispell-program-name "aspell")
+	(setq ispell-extra-args '("--sug-mode=ultra")))
+    (setq ispell-program-name "ispell"))
+
+  ;; (add-hook 'text-mode-hook 'flyspell-mode)
+  ;; (add-hook 'org-mode-hook 'flyspell-mode)
+  ;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+#+END_SRC
+
+* Org
+
+Empty line before headline but not plain-list
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-blank-before-new-entry
+	'((heading .t) (plain-list-item . nil)))
+#+END_SRC
+
+Prettier heading with org-bullets
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :ensure t
+    :init (add-hook 'org-mode-hook 'org-bullets-mode))
+#+END_SRC
+
+** Bindings
+
+Set up some global key bindings that integrate with Org Mode features.
+
+#+BEGIN_SRC emacs-lisp
+  (bind-key "C-c l" 'org-store-link)
+  (bind-key "C-c c" 'org-capture)
+  (bind-key "C-c a" 'org-agenda)
+  ;; (global-set-key "\C-cl" 'org-store-link)
+  ;; (global-set-key "\C-cc" 'org-capture)
+  ;; (global-set-key "\C-ca" 'org-agenda)
+  ;; (global-set-key "\C-cb" 'org-iswitchb)
+#+END_SRC
+
+** Files
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-default-notes-file "~/org/default.org")
+  (setq org-agenda-files (file-expand-wildcards "~/org/agenda/*.org"))
+#+END_SRC
+
+** Capture
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+	'(("j" "Journal Entry"
+	   entry (file+datetree "~/org/journal.org")
+	   "* %?"
+	   :empty-lines 1)
+	  ("t" "Todo capture"
+	   entry (file "~/org/agenda/todo-capture.org")
+	   "* TODO %?"
+	   :empty-lines 1)
+	  ("n" "Note"
+	   entry (file "~/org/notes/capture.org")
+	   "* %?"
+	   :empty-lines 1)
+	  ("s" "Code snippet"
+	   entry (file "~/org/notes/programming/snippet_capture.org")
+	   (file "~/.emacs.d/snippet.orgcaptmpl")
+	   :empty-lines 1)))
+#+END_SRC
+
+** Babel
+
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (emacs-lisp . t)
+     (sh . t)
+     (python . t)
+     ))
+#+END_SRC
+
+* Markdown
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :mode (("\\.markdown\\'" . markdown-mode)
+	   ("\\.md\\'"       . markdown-mode))
+    :config
+    (defhydra hydr-markdown (:hint nil)
+      "
+  Formatting        C-c C-s    _s_: bold          _e_: italic     _b_: blockquote   _p_: pre-formatted    _c_: code
+
+  Headings          C-c C-t    _h_: automatic     _1_: h1         _2_: h2           _3_: h3               _4_: h4
+
+  Lists             C-c C-x    _m_: insert item
+
+  Demote/Promote    C-c C-x    _l_: promote       _r_: demote     _u_: move up      _d_: move down
+
+  Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote     _W_: wiki-link      _R_: reference
+
+  "
+
+      ("s" markdown-insert-bold)
+      ("e" markdown-insert-italic)
+      ("b" markdown-insert-blockquote :color blue)
+      ("p" markdown-insert-pre :color blue)
+      ("c" markdown-insert-code)
+
+      ("h" markdown-insert-header-dwim)
+      ("1" markdown-insert-header-atx-1)
+      ("2" markdown-insert-header-atx-2)
+      ("3" markdown-insert-header-atx-3)
+      ("4" markdown-insert-header-atx-4)
+
+      ("m" markdown-insert-list-item)
+
+      ("l" markdown-promote)
+      ("r" markdown-demote)
+      ("d" markdown-move-down)
+      ("u" markdown-move-up)
+
+      ("L" markdown-insert-link :color blue)
+      ("U" markdown-insert-uri :color blue)
+      ("F" markdown-insert-footnote :color blue)
+      ("W" markdown-insert-wiki-link :color blue)
+      ("R" markdown-insert-reference-link-dwim :color blue)
+      )
+
+    (key-chord-mode 1)
+    (key-chord-define markdown-mode-map "mm" 'hydr-markdown/body)
+
+    )
+#+END_SRC
+
+* Programming
+
+#+BEGIN_SRC emacs-lisp
+  (use-package company
+    :ensure t
+    :pin melpa-stable
+    :diminish company-mode
+    :defer 2
+    :init
+    (setq company-idle-delay 0.3)
+    :config
+    (global-company-mode))
+
+  (use-package yasnippet
+    :ensure t
+    :pin melpa-stable
+    :diminish yas-minor-mode
+    :defer 3
+    :config (yas-global-mode))
+
+  (use-package magit
+    ;; :ensure t
+    :defer t
+    ;; :config (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+    :pin melpa-stable)
+
+  (use-package projectile
+    :ensure t
+    :diminish projectile-mode
+    :config (projectile-global-mode))
+
+  (use-package ibuffer-vc
+    :ensure t
+    :init (add-hook 'ibuffer-hook
+	    (lambda ()
+	      (ibuffer-vc-set-filter-groups-by-vc-root)
+	      (unless (eq ibuffer-sorting-mode 'alphabetic)
+		(ibuffer-do-sort-by-alphabetic)))))
+
+  (use-package expand-region
+    :ensure t
+    :bind ("C-@" . er/expand-region))
+
+  (add-hook 'prog-mode-hook 'electric-pair-mode)
+  (add-hook 'prog-mode-hook
+	    (lambda ()
+	      (interactive)
+	      (setq show-trailing-whitespace 1)))
+#+END_SRC
+
+*** TODO Prettyfy
+
+ Maybe i should use some pretty symbol in different mode.
+  - [[http://ergoemacs.org/emacs/emacs_pretty_lambda.html][prettify symbols - ErgoEmacs]]
+
+** Lisp
+
+Keep parentheses balanced wiht paredit
+
+#+BEGIN_SRC emacs-lisp
+  (use-package paredit
+    :diminish paredit-mode
+    :init
+    (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+    (add-hook 'ielm-mode-hook 'paredit-mode)
+    :ensure t)
+#+END_SRC
+
+Improve visual with color
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t
+    :init
+    (add-hook 'emacs-lisp-mode 'rainbow-delimiters-mode)
+    (add-hook 'ielm-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+** Web
+
+#+BEGIN_SRC emacs-lisp
+  (use-package emmet-mode
+    :init (progn
+	    (add-hook 'sgml-mode-hook 'emmet-mode)
+	    (add-hook 'css-mode-hook 'emmet-mode)))
+#+END_SRC
+
+* System
+
+Systemd files
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("\\.service\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.timer\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.target\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.mount\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.automount\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.slice\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.socket\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.path\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.netdev\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.network\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.link\\'" . conf-unix-mode))
+  (add-to-list 'auto-mode-alist '("\\.automount\\'" . conf-unix-mode))
+#+END_SRC
+
+* Tools
+
+#+BEGIN_SRC emacs-lisp
+  (use-package speed-type
+    :defer t
+    :ensure t)
+
+  (use-package engine-mode
+    :ensure t
+    :config
+    (defengine duckduckgo
+      "https://duckduckgo.com/?q=%s"
+      :keybinding "d")
+    (defengine github
+      "https://github.com/search?ref=simplesearch&q=%s"
+      :keybinding "g"))
+  (engine-mode)
+
+  ;; (use-package neotree
+  ;;   :bind ("f8" . neotree-toggle))
+#+END_SRC
+
+* My functions
+
+  Insert file name ([[http://www.emacswiki.org/emacs/InsertFileName][EmacsWiki]])
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-insert-file-path (filename &optional args)
+    "Insert path of file FILENAME into buffer after point.
+
+  Prefixed with \\[universal-argument], expand the file name to its
+  fully canocalized path. See `expand-file-name'.
+
+  Prefixed with \\[negative-argument], use relative path to file
+  name from current directory, `default-directory'. See
+  `file-relative-name'.
+
+  The default with no prefix is to insert the file name exactly as
+  it appears in the minibuffer prompt."
+
+    (interactive "*fInsert file name: \nP")
+    (cond ((eq '- args)
+	   (insert (file-relative-name filename)))
+	  ((not (null args))
+	   (insert (expand-file-name filename)))
+	  (t
+	   (insert filename))))
+#+END_SRC
+
+* Temp
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :init (progn
+	    (require 'helm-config)
+	    (setq helm-M-x-fuzzy-match t)
+	    ;; (global-unset-key (kbd "C-x c"))
+	    )
+    :bind (("C-c h" . helm-command-prefix)
+	   ("C-x b" . helm-mini)
+	   ("C-`" . helm-resume)
+	   ("M-x" . helm-M-x)
+	   ; ("C-x C-f" . helm-for-files)
+	   ("C-x C-f" . helm-find-files))
+    :diminish helm-mode
+    :config (helm-mode))
+  ;; (use-package helm-dash
+  ;;   :pin melpa-stable)
+
+  (use-package flycheck
+    :pin melpa-stable)
+#+END_SRC
+
+** TODO Various stuff from the previous config
+
+Import some elip form my previous .emacs.d, this need to be cleaned up
+and sorted in the new config.
+
+#+BEGIN_SRC emacs-lisp
+  ;; ediff cli
+  ;; Usage: emacs -diff file1 file2
+  (defun command-line-diff (switch)
+    (let ((file1 (pop command-line-args-left))
+	  (file2 (pop command-line-args-left)))
+	 (ediff file1 file2)))
+  (add-to-list 'command-switch-alist '("diff" . command-line-diff))
+
+  ;; (setq tab-always-indent 'complete)
+
+  (add-hook 'before-save-hook 'whitespace-cleanup)
+  ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (add-hook 'makefile-mode-hook 'indent-tabs-mode)
+
+  ;; I can i like the blinking cursor :/
+  ;; (blink-cursor-mode 1)
+
+  (defun sudo ()
+    "Use TRAMP to `sudo' the current buffer"
+    (interactive)
+    (when buffer-file-name
+      (find-alternate-file
+       (concat "/sudo:root@localhost:"
+	       buffer-file-name))))
+
+#+END_SRC
