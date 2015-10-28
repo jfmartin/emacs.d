@@ -465,7 +465,6 @@ Systemd files
 #+BEGIN_SRC emacs-lisp
   (use-package helm
     :init (progn
-	    (require 'helm-config)
 	    (setq helm-M-x-fuzzy-match t)
 	    ;; (global-unset-key (kbd "C-x c"))
 	    )
@@ -476,7 +475,9 @@ Systemd files
 	   ; ("C-x C-f" . helm-for-files)
 	   ("C-x C-f" . helm-find-files))
     :diminish helm-mode
-    :config (helm-mode))
+    :config
+    (require 'helm-config)
+    (helm-mode))
   ;; (use-package helm-dash
   ;;   :pin melpa-stable)
 
