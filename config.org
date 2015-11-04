@@ -336,7 +336,8 @@ Set up some global key bindings that integrate with Org Mode features.
     ;; :ensure t
     :defer t
     ;; :config (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-    :pin melpa-stable)
+    :pin melpa-stable
+    :bind ("C-c g" . magit-status))
 
   (use-package projectile
     :ensure t
