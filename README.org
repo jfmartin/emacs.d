@@ -1,0 +1,15 @@
+#+TITLE: jfmartin Emacs Configuration
+#+Author: Jean-François Martin
+
+My Emacs config
+
+
+* Systemd
+
+Systemd start Emacs daemon at login. Link or copy the service file in
+=~/.config/systemd/user/=. Then enable it.
+
+#+BEGIN_SRC sh
+  systemctl --user enable emacs
+  systemctl --user start emacs
+#+END_SRC
