@@ -146,8 +146,8 @@ comment it.
 
 #+BEGIN_SRC emacs-lisp
   (use-package tramp
-    :init (setq tramp-default-method "ssh"))
-
+    :ensure t
+    :config (custom-set-variables '(tramp-default-method "ssh")))
 #+END_SRC
 
 * Edit
