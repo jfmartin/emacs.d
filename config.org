@@ -216,6 +216,13 @@ Prettier heading with org-bullets
     :init (add-hook 'org-mode-hook 'org-bullets-mode))
 #+END_SRC
 
+Prettier ellipsis
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-ellipsis "…")
+  ;; (setq org-ellipsis "⤵")
+#+END_SRC
+
 ** Bindings
 
 Set up some global key bindings that integrate with Org Mode features.
