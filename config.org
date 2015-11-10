@@ -95,6 +95,11 @@ Distinguish buffer with the same name by setting up uniquify.
 
 * Theme & Visual
 
+Disable toolbar
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   (use-package ample-zen-theme
     :ensure t
