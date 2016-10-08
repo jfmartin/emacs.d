@@ -392,6 +392,9 @@ Set up some global key bindings that integrate with Org Mode features.
     :ensure t
     :bind ("C-@" . er/expand-region))
 
+  (use-package helm-dash
+    :ensure t)
+
   (add-hook 'prog-mode-hook 'electric-pair-mode)
   (add-hook 'prog-mode-hook
 	    (lambda ()
