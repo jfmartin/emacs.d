@@ -547,6 +547,9 @@ Systemd files
   (use-package flycheck
     :pin melpa-stable)
 
+  (use-package whole-line-or-region
+    :ensure t)
+
   (use-package tldr
     :ensure t)
 #+END_SRC
