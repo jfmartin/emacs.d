@@ -72,6 +72,9 @@ Basics config is done, now some sane defaults.
 
   ;; Enable / No warnings
   (put 'erase-buffer 'disabled nil)
+
+  ;; View mode if file is read only
+  (setq view-read-only t)
 #+END_SRC
 
 ** Things that are intrag
