@@ -488,8 +488,8 @@ Systemd files
       :keybinding "g"))
   (engine-mode)
 
-  ;; (use-package neotree
-  ;;   :bind ("f8" . neotree-toggle))
+  (use-package neotree
+    :bind ([f8] . neotree-toggle))
 #+END_SRC
 
 * My functions
