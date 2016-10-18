@@ -241,6 +241,12 @@ Prettier ellipsis
   ;; (setq org-ellipsis "⤵")
 #+END_SRC
 
+Source syntax
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-src-fontify-natively t)
+#+END_SRC
+
 ** Bindings
 
 Set up some global key bindings that integrate with Org Mode features.
