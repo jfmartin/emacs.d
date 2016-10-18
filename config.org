@@ -431,10 +431,9 @@ Improve visual with color
 
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters
-    :ensure t
-    :init
-    (add-hook 'emacs-lisp-mode 'rainbow-delimiters-mode)
-    (add-hook 'ielm-mode-hook 'rainbow-delimiters-mode))
+    :ensure t)
+  (add-hook 'emacs-lisp-mode 'rainbow-delimiters-mode)
+  (add-hook 'ielm-mode-hook 'rainbow-delimiters-mode)
 #+END_SRC
 
 *** Clojure
