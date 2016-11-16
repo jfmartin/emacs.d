@@ -116,7 +116,7 @@ Disable toolbar
   (use-package powerline
     :ensure t
     :init
-    (powerline-default-theme))
+    (powerline-vim-theme))
 #+END_SRC
 
 * Ido & Recentf
