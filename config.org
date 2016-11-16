@@ -135,7 +135,8 @@ Disable toolbar
 	:ensure t
 	:init
 	(flx-ido-mode 1)
-	(setq ido-enable-flex-matching t))))
+	(setq ido-enable-flex-matching t)))
+    :bind (("C-x C-f" . ido-find-file)))
 
   (use-package recentf
     :init
@@ -538,8 +539,9 @@ Systemd files
 	   ("C-x b" . helm-mini)
 	   ("C-`" . helm-resume)
 	   ("M-x" . helm-M-x)
-	   ; ("C-x C-f" . helm-for-files)
-	   ("C-x C-f" . helm-find-files))
+           ; ("C-x C-f" . helm-for-files)
+           ; ("C-x C-f" . helm-find-files)
+	   )
     :diminish helm-mode
     :config
     (require 'helm-config)
