@@ -237,8 +237,9 @@ Prettier heading with org-bullets
 Prettier ellipsis
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-ellipsis "…")
+  ;; (setq org-ellipsis "…")
   ;; (setq org-ellipsis "⤵")
+  (setq org-ellipsis "  △.△.△")
 #+END_SRC
 
 Source syntax
