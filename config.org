@@ -525,6 +525,12 @@ Systemd files
 	   (insert (expand-file-name filename)))
 	  (t
 	   (insert filename))))
+
+  (defun save-kill-buffer ()
+    "Save and kill current buffer"
+    (interactive)
+    (save-buffer)
+    (kill-buffer))
 #+END_SRC
 
 * Temp
