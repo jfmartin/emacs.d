@@ -50,7 +50,7 @@ Basics config is done, now some sane defaults.
   (global-set-key [remap dabbrev-expand] 'hippie-expand) ; M-/
 
   ;; Linenumber
-  (global-linum-mode 1)
+  (global-linum-mode 0)
 
   ;; Pairs
   (show-paren-mode 1)
