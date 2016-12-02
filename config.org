@@ -110,15 +110,6 @@ Disable toolbar
     :config (load-theme 'ample-zen t))
 #+END_SRC
 
-** Powerline
-
-#+BEGIN_SRC emacs-lisp
-  (use-package powerline
-    :ensure t
-    :init
-    (powerline-vim-theme))
-#+END_SRC
-
 * Ido & Recentf
 
 #+BEGIN_SRC emacs-lisp
