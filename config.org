@@ -555,10 +555,6 @@ Systemd files
   ;; (use-package helm-dash
   ;;   :pin melpa-stable)
 
-  (use-package swiper-helm
-    :ensure t
-    :bind ("C-s" . swiper-helm))
-
   (use-package flycheck
     :pin melpa-stable)
 
