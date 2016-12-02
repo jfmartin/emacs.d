@@ -441,14 +441,14 @@ Improve visual with color
 *** Clojure
 
 #+BEGIN_SRC emacs-lisp
-  (use-package clojure-mode
-    :ensure t)
+  ;; (use-package clojure-mode
+  ;;   :ensure t)
 
-  (use-package clojure-mode-extra-font-locking
-    :ensure t)
+  ;; (use-package clojure-mode-extra-font-locking
+  ;;   :ensure t)
 
-  (use-package cider
-    :ensure t)
+  ;; (use-package cider
+  ;;   :ensure t)
 #+END_SRC
 ** Web
 
