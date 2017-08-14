@@ -107,9 +107,6 @@
 ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'makefile-mode-hook 'indent-tabs-mode)
 
-;; I can i like the blinking cursor :/
-;; (blink-cursor-mode 1)
-
 (defun sudo ()
   "Use TRAMP to `sudo' the current buffer"
   (interactive)
