@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: desktopurl
+# key: desktopurl
+# binding: direct-keybinding
+# --
+[Desktop Entry]
+Type=Link
+Name=$1
+URL=$2

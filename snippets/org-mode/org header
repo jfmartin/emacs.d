@@ -1,0 +1,12 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: org header
+# key: orgheader
+# binding: direct-keybinding
+# --
+#+TITLE: $1
+#+AUTHOR: ${2:`(user-full-name)`}
+#+EMAIL: $3
+#+DESCRIPTION: $4
+#+STARTUP: ${5:$$(yas-choose-value '("content" "overview" "showall"))}
+
+$0
