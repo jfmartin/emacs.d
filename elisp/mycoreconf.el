@@ -36,9 +36,6 @@
 ;; Don't beep
 (setq visible-bell t)
 
-;; Hippie > Dabbrev
-(global-set-key [remap dabbrev-expand] 'hippie-expand) ; M-/
-
 ;; Linenumber
 (global-linum-mode 0)
 
@@ -111,6 +108,11 @@
     (recentf-mode t)
     (setq recentf-max-saved-items 200
 	  recentf-save-file "~/.emacs.d/recentf")))
+
+;; hippie-expand (instead of dabbrev)
+(use-package hippie-expand
+  :bind ("M-/" . hippie-expand)
+  :commands (hippie-expand))
 
 ;; smex
 ;; (require 'smex)
