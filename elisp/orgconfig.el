@@ -8,6 +8,7 @@
   (setq org-agenda-files (file-expand-wildcards "~/org/agenda/*.org"))
   ;; (setq org-ellipsis "⤵")
   (setq org-src-fontify-natively t)
+  (setq org-todo-keywords '((sequence "TODO(t)" "WAITING(w)" "DONE(d@)")))
   (setq org-capture-templates
 	'(("j" "Journal Entry"
 	   entry (file+datetree "~/org/journal.org")
